@@ -16,6 +16,13 @@ class ViewController: UIViewController {
 		ToDoModel(task: "Call mom", isDone: false)
 	]
 
+    
+    
+    var allTasks: [[ToDoModel]] = [[ToDoModel]]
+    
+    
+    
+    
 	@IBOutlet weak var tableView: UITableView!
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,7 +32,7 @@ class ViewController: UIViewController {
 	func setupTableView() {
 		tableView.dataSource = self
 		tableView.delegate = self
-
+        tableView.sele
 		let toDoCell = UINib(nibName: "ToDoCell", bundle: nil)
 		tableView.register(toDoCell, forCellReuseIdentifier: "todocell")
 
@@ -67,6 +74,7 @@ extension ViewController: UITableViewDataSource {
 			return UITableViewCell()
 		}
 		cell.setup(task: tasks[indexPath.row])
+        cell.selectionStyle = .none
 		return cell
 	}
 
@@ -89,6 +97,10 @@ extension ViewController: UITableViewDelegate {
 	
 	// Метод отвечающий за нажатие за ячейку
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section != 0 { return }
+        
+        var doneTask = allTasks[indexPath.section]
+        
 		tasks[indexPath.row].isDone = true
 		tableView.reloadData()
 	}
@@ -98,11 +110,15 @@ extension ViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 		// Достаем объект
-		let movedObject = tasks[sourceIndexPath.row]
+        var movedCell = allTasks[sourceIndexPath.section][sourceIndexPath.row]
+        
+        if sourceIndexPath.section != destinationIndexPath.section { movedCell.isDone.toggle()
 		// Удаляем из массива
-		tasks.remove(at: sourceIndexPath.row)
+            allTasks[sourceIndexPath.section].remove(at:[sourceIndexPath.row]
 		// Вставляем на новую позицию
-		tasks.insert(movedObject, at: destinationIndexPath.row)
+                                                    allTasks[destinationIndexPath.section].insert(movedCell, at: destinationIndexPath.row)
+        
+        tableView.reloadData()
 	}
 
 
@@ -115,13 +131,15 @@ extension ViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		
 		let undoneAction = UIContextualAction(style: .normal, title: "Undone") { _, _, completion in
+            
 			self.tasks[indexPath.row].isDone = false
+            let  unDoneTask = self.allTasks[indexPath.section][indexPath.row]
 			tableView.reloadData()
 			completion(true)
 		}
 
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completion in
-			self.tasks.remove(at: indexPath.row)
+			self.allTasks[indexPath]
 			tableView.reloadData()
 			completion(true)
 		}
@@ -129,6 +147,11 @@ extension ViewController: UITableViewDelegate {
 		undoneAction.backgroundColor = .systemBlue
 		deleteAction.backgroundColor = .systemRed
 
-		return UISwipeActionsConfiguration(actions: [deleteAction, undoneAction])
-	}
+        }
+    
 }
+
+return UISwipeActionsConfiguration(actions: IndexPath.section == 0 [deleteAction]) : [deletAction, undonAction])
+
+
+	}

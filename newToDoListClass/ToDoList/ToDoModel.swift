@@ -10,9 +10,11 @@ import Foundation
 struct ToDoModel {
 	let task: String
 	var isDone: Bool
-
+    let deadLineDate: Date()
+    
 	init(task: String, isDone: Bool) {
 		self.task = task
 		self.isDone = isDone
+        self.deadLineDate = deadLineDate
 	}
 }

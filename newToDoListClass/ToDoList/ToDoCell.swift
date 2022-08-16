@@ -10,9 +10,9 @@ import UIKit
 class ToDoCell: UITableViewCell {
 
 	@IBOutlet weak var taskLabel: UILabel!
-
 	@IBOutlet weak var iconImageView: UIImageView!
-
+    @IBOutlet weak var dataLabel: UILabel!
+    
 	override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,5 +28,13 @@ class ToDoCell: UITableViewCell {
 		taskLabel.text = task.task
 		iconImageView.isHidden = !task.isDone
 	}
+    func setDateInLabel(_ date: Date) {
+      let dateFormater  = DateFormatter()
+  //      dateFormater.dateStyle = .long
+  //    dateFormater.timeStyle = .short
+  //       dateFormater.dateFormat = "HH:mm E, d MMM y"
+        
+        
+        dataLabel.text = dateFormater.string(from: date)
     
 }

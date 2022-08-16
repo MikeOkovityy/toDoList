@@ -9,6 +9,8 @@ import UIKit
 
 class AddTaskViewController: UIViewController {
 
+    
+    @IBOutlet weak var datePicker: UIDatePicker!
 	@IBOutlet weak var taskNameTextField: UITextField!
 
 	// Замыкание для передачи данных https://swiftbook.ru/post/tutorials/pass-data/
@@ -18,6 +20,11 @@ class AddTaskViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func setupDatePicker() {
+        datePicker.minimumDate = Date()
     }
     
 	@IBAction func addTask() {
